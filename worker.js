@@ -3476,6 +3476,12 @@ const DOCUMENT_POSITION_IMPLEMENTATION_SPECIFIC = 0x20;
 // SVG
 const SVG_NAMESPACE = 'http://www.w3.org/2000/svg';
 
+// Characters
+const QUOTE = /"/g;
+const LT = /</g;
+const GT = />/g;
+const AMPERSAND = /&/g;
+
 const {
   assign,
   create: create$1,
@@ -4417,8 +4423,6 @@ let Node$1 = class Node extends DOMEventTarget {
     return root;
   }
 };
-
-const QUOTE = /"/g;
 
 /**
  * @implements globalThis.Attr
@@ -11224,26 +11228,31 @@ const Mime = {
   'text/html': {
     docType: '<!DOCTYPE html>',
     ignoreCase: true,
+    isXml: false,
     voidElements: /^(?:area|base|br|col|embed|hr|img|input|keygen|link|menuitem|meta|param|source|track|wbr)$/i
   },
   'image/svg+xml': {
     docType: '<?xml version="1.0" encoding="utf-8"?>',
     ignoreCase: false,
+    isXml: true,
     voidElements
   },
   'text/xml': {
     docType: '<?xml version="1.0" encoding="utf-8"?>',
     ignoreCase: false,
+    isXml: true,
     voidElements
   },
   'application/xml': {
     docType: '<?xml version="1.0" encoding="utf-8"?>',
     ignoreCase: false,
+    isXml: true,
     voidElements
   },
   'application/xhtml+xml': {
     docType: '<?xml version="1.0" encoding="utf-8"?>',
     ignoreCase: false,
+    isXml: true,
     voidElements
   }
 };
@@ -11442,6 +11451,21 @@ class TreeWalker {
   }
 }
 
+/**
+ * @implements globalThis.Attr
+ */
+class XmlAttr extends Attr$1 {
+  constructor(ownerDocument, name, value = '') {
+    super(ownerDocument, name, value);
+  }
+
+  toString() {
+    const {name, [VALUE]: value} = this;
+    return emptyAttributes.has(name) && !value ?
+            name : `${name}="${value.replace(AMPERSAND, '&amp;').replace(QUOTE, '&quot;').replace(LT, '&lt;').replace(GT, '&gt;')}"`;
+  }
+}
+
 const query = (method, ownerDocument, selectors) => {
   let {[NEXT]: next, [END]: end} = ownerDocument;
   return method.call({ownerDocument, [NEXT]: next, [END]: end}, selectors);
@@ -11577,7 +11601,7 @@ let Document$1 = class Document extends NonElementParentNode {
     return this[EVENT_TARGET];
   }
 
-  createAttribute(name) { return new Attr$1(this, name); }
+  createAttribute(name) { return this[MIME].isXml ? new XmlAttr(this, name) : new Attr$1(this, name); }
   createComment(textContent) { return new Comment$1(this, textContent); }
   createDocumentFragment() { return new DocumentFragment$1(this); }
   createDocumentType(name, publicId, systemId) { return new DocumentType$1(this, name, publicId, systemId); }

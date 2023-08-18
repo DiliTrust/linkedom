@@ -1,4 +1,4 @@
-import {ATTRIBUTE_NODE} from '../shared/constants.js';
+import {ATTRIBUTE_NODE,QUOTE} from '../shared/constants.js';
 import {CHANGED, VALUE} from '../shared/symbols.js';
 import {String} from '../shared/utils.js';
 import {attrAsJSON} from '../shared/jsdon.js';
@@ -8,8 +8,6 @@ import {attributeChangedCallback as moAttributes} from './mutation-observer.js';
 import {attributeChangedCallback as ceAttributes} from './custom-element-registry.js';
 
 import {Node} from './node.js';
-
-const QUOTE = /"/g;
 
 /**
  * @implements globalThis.Attr

@@ -18,3 +18,7 @@ export const DOCUMENT_POSITION_CONTAINS: 8;
 export const DOCUMENT_POSITION_CONTAINED_BY: 16;
 export const DOCUMENT_POSITION_IMPLEMENTATION_SPECIFIC: 32;
 export const SVG_NAMESPACE: "http://www.w3.org/2000/svg";
+export const QUOTE: RegExp;
+export const LT: RegExp;
+export const GT: RegExp;
+export const AMPERSAND: RegExp;

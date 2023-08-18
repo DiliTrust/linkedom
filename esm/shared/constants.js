@@ -29,3 +29,9 @@ export const DOCUMENT_POSITION_IMPLEMENTATION_SPECIFIC = 0x20;
 
 // SVG
 export const SVG_NAMESPACE = 'http://www.w3.org/2000/svg';
+
+// Characters
+export const QUOTE = /"/g;
+export const LT = /</g;
+export const GT = />/g;
+export const AMPERSAND = /&/g;

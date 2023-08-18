@@ -50,3 +50,13 @@ exports.DOCUMENT_POSITION_IMPLEMENTATION_SPECIFIC = DOCUMENT_POSITION_IMPLEMENTA
 // SVG
 const SVG_NAMESPACE = 'http://www.w3.org/2000/svg';
 exports.SVG_NAMESPACE = SVG_NAMESPACE;
+
+// Characters
+const QUOTE = /"/g;
+exports.QUOTE = QUOTE;
+const LT = /</g;
+exports.LT = LT;
+const GT = />/g;
+exports.GT = GT;
+const AMPERSAND = /&/g;
+exports.AMPERSAND = AMPERSAND;

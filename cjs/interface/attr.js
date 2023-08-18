@@ -1,5 +1,5 @@
 'use strict';
-const {ATTRIBUTE_NODE} = require('../shared/constants.js');
+const {ATTRIBUTE_NODE, QUOTE} = require('../shared/constants.js');
 const {CHANGED, VALUE} = require('../shared/symbols.js');
 const {String} = require('../shared/utils.js');
 const {attrAsJSON} = require('../shared/jsdon.js');
@@ -9,8 +9,6 @@ const {attributeChangedCallback: moAttributes} = require('./mutation-observer.js
 const {attributeChangedCallback: ceAttributes} = require('./custom-element-registry.js');
 
 const {Node} = require('./node.js');
-
-const QUOTE = /"/g;
 
 /**
  * @implements globalThis.Attr
